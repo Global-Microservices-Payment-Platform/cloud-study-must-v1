@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("mpesaIntegration")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1e0f4e054b650b6769d78eb7c53c7b37bd6c54f9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c04a38bb6c1989531b0368cf9be3e355c290501b")]
 [assembly: System.Reflection.AssemblyProductAttribute("mpesaIntegration")]
 [assembly: System.Reflection.AssemblyTitleAttribute("mpesaIntegration")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
