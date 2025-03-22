@@ -1,0 +1,4 @@
+namespace mpesaIntegration.Repository.IUserRepository
+{
+    
+}
