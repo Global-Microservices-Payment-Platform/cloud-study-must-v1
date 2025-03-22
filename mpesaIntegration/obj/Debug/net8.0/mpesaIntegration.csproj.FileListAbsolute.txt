@@ -167,3 +167,5 @@
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.pdb
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.genruntimeconfig.cache
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/ref/mpesaIntegration.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration.xml
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.xml

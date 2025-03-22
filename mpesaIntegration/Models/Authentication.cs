@@ -95,7 +95,9 @@ namespace mpesaIntegration.Models.Authentication
         /// <summary>
         /// JWT refresh token for maintaining persistent sessions
         /// </summary>
-        public string RefreshToken { get; set; }
+        /// 
+        [MaxLength(500)]
+        public string? RefreshToken { get; set; } //set to nullable
         
         /// <summary>
         /// Expiration date for the refresh token
