@@ -6,6 +6,7 @@ using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Linq;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace mpesaIntegration.Controllers
 {
@@ -200,53 +201,49 @@ namespace mpesaIntegration.Controllers
         /// - Data projection to DTO
         /// - Secure data handling
         /// </remarks>
-        [Authorize]
-        [HttpGet("profile")]
-        [ProducesResponseType(typeof(UserProfileResponse), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<UserProfileResponse>> GetProfile()
+[Authorize]
+[HttpGet("profile")]
+public async Task<ActionResult<UserProfileResponse>> GetProfile()
+{
+    try
+    {
+        // Get user ID from multiple possible claim locations
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) 
+                   ?? User.FindFirstValue(JwtRegisteredClaimNames.Sub);
+        
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
         {
-            try
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                
-                if (string.IsNullOrEmpty(userId))
-                {
-                    return Unauthorized(new { message = "Invalid token" });
-                }
-                
-                var user = await _authService.GetUserProfileAsync(userId);
-                
-                if (user == null)
-                {
-                    return NotFound(new { message = "User not found" });
-                }
-                
-                // Map to DTO to prevent over-posting and sensitive data exposure
-                var profileResponse = new UserProfileResponse
-                {
-                    Id = user.Id,
-                    FullName = user.FullName,
-                    Email = user.Email,
-                    MobileNumber = user.MobileNumber,
-                    Role = user.Role,
-                    IsEmailVerified = user.IsEmailVerified,
-                    CreatedAt = user.CreatedAt,
-                    LastLoginAt = user.LastLoginAt
-                };
-
-                return Ok(profileResponse);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving profile");
-                return StatusCode(StatusCodes.Status500InternalServerError, 
-                    new { message = "An unexpected error occurred" });
-            }
+            _logger.LogWarning("Invalid user ID in token");
+            return Unauthorized(new { message = "Invalid token claims" });
         }
 
+        var user = await _authService.GetUserProfileAsync(userGuid.ToString());
+        if (user == null)
+        {
+            _logger.LogWarning("User not found for ID: {UserId}", userId);
+            return NotFound(new { message = "User not found" });
+        }
+
+        var profileResponse = new UserProfileResponse
+        {
+            Id = user.Id,
+            FullName = user.FullName,
+            Email = user.Email,
+            MobileNumber = user.MobileNumber,
+            Role = user.Role,
+            IsEmailVerified = user.IsEmailVerified,
+            CreatedAt = user.CreatedAt,
+            LastLoginAt = user.LastLoginAt
+        };
+
+        return Ok(profileResponse);
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error retrieving profile");
+        return StatusCode(500, new { message = "An error occurred" });
+    }
+}
         /// <summary>
         /// Initiates account deletion process
         /// </summary>
