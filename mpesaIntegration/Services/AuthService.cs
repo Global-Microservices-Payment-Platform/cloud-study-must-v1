@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
 
 namespace mpesaIntegration.Services
 {
@@ -168,59 +169,60 @@ namespace mpesaIntegration.Services
         /// <summary>
         /// Refreshes an expired JWT token using a valid refresh token
         /// </summary>
-        public async Task<AuthenticationResponse> RefreshTokenAsync(string accessToken, string refreshToken)
+public async Task<AuthenticationResponse> RefreshTokenAsync(string accessToken, string refreshToken)
+{
+    try
+    {
+        if (string.IsNullOrEmpty(accessToken) || string.IsNullOrEmpty(refreshToken))
         {
-            try
-            {
-                // Validate the expired access token
-                var principal = _jwtService.GetPrincipalFromExpiredToken(accessToken);
-                var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                
-                if (string.IsNullOrEmpty(userId))
-                {
-                    _logger.LogWarning("Token refresh failed: Unable to extract user ID from token");
-                    return AuthenticationResponse.Failure("Invalid token");
-                }
-                
-                // Find user by ID
-                var user = await _userRepository.GetUserByIdAsync(Guid.Parse(userId));
-                if (user == null)
-                {
-                    _logger.LogWarning("Token refresh failed: User not found for ID {UserId}", userId);
-                    return AuthenticationResponse.Failure("Invalid token");
-                }
-                
-                // Validate refresh token
-                if (user.RefreshToken != refreshToken || 
-                    user.RefreshTokenExpiryTime <= DateTime.UtcNow)
-                {
-                    _logger.LogWarning("Token refresh failed: Invalid or expired refresh token for user {UserId}", userId);
-                    return AuthenticationResponse.Failure("Invalid or expired refresh token");
-                }
-                
-                // Generate new tokens
-                var (newAccessToken, expiration) = _jwtService.GenerateJwtToken(user);
-                var newRefreshToken = _jwtService.GenerateRefreshToken();
-                
-                // Update user's refresh token
-                user.RefreshToken = newRefreshToken;
-                user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
-                
-                // Save changes to database
-                await _userRepository.UpdateUserAsync(user);
-                
-                _logger.LogInformation("Token refreshed successfully for user: {UserId}", userId);
-                
-                // Return success response with new tokens
-                return AuthenticationResponse.Success(user, newAccessToken, newRefreshToken, expiration);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error during token refresh");
-                return AuthenticationResponse.Failure("Token refresh failed due to an internal error");
-            }
+            _logger.LogWarning("Empty tokens in refresh request");
+            return AuthenticationResponse.Failure("Invalid token request");
         }
 
+        var principal = _jwtService.GetPrincipalFromExpiredToken(accessToken);
+        var userId = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var userGuid))
+        {
+            _logger.LogWarning("Invalid user ID in refresh token");
+            return AuthenticationResponse.Failure("Invalid token");
+        }
+
+        var user = await _userRepository.GetUserByIdAsync(userGuid);
+        if (user == null)
+        {
+            _logger.LogWarning("User not found during token refresh");
+            return AuthenticationResponse.Failure("Invalid token");
+        }
+
+        if (user.RefreshToken != refreshToken || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+        {
+            _logger.LogWarning("Invalid or expired refresh token for user {UserId}", userId);
+            return AuthenticationResponse.Failure("Invalid refresh token");
+        }
+
+        // Generate new tokens
+        var (newAccessToken, expiration) = _jwtService.GenerateJwtToken(user);
+        var newRefreshToken = _jwtService.GenerateRefreshToken();
+
+        // Update user
+        user.RefreshToken = newRefreshToken;
+        user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(7);
+        await _userRepository.UpdateUserAsync(user);
+
+        return AuthenticationResponse.Success(user, newAccessToken, newRefreshToken, expiration);
+    }
+    catch (SecurityTokenException ex)
+    {
+        _logger.LogWarning(ex, "Security token validation failed during refresh");
+        return AuthenticationResponse.Failure("Invalid security token");
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error during token refresh");
+        return AuthenticationResponse.Failure("Token refresh failed");
+    }
+}
         /// <summary>
         /// Revokes a user's refresh token, effectively logging them out
         /// </summary>
