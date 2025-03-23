@@ -37,7 +37,7 @@ namespace mpesaIntegration.Services
         /// <summary>
         /// Gets a user's profile information
         /// </summary>
-        Task<User> GetUserProfileAsync(string userId);
+        Task<User?> GetUserProfileAsync(string userId);
         
         /// <summary>
         /// Marks an account for deletion (soft delete)
@@ -257,29 +257,28 @@ public async Task<AuthenticationResponse> RefreshTokenAsync(string accessToken, 
         /// <summary>
         /// Gets a user's profile information
         /// </summary>
-        public async Task<User?> GetUserProfileAsync(string userId)
+public async Task<User?> GetUserProfileAsync(string userId)
+{
+    try
+    {
+        _logger.LogInformation("Fetching profile for user: {UserId}", userId);
+        var user = await _userRepository.GetUserByIdAsync(Guid.Parse(userId));
+        
+        if (user == null)
         {
-            try
-            {
-                var user = await _userRepository.GetUserByIdAsync(Guid.Parse(userId));
-                
-                // For security, clear sensitive fields before returning
-                if (user != null)
-                {
-                    user.PasswordHash = null;
-                    user.PasswordSalt = null;
-                    user.RefreshToken = null;
-                }
-                
-                return user ?? null;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error retrieving user profile for user {UserId}", userId);
-                return null;
-            }
+            _logger.LogWarning("User not found for ID: {UserId}", userId);
+            return null;
         }
 
+        _logger.LogDebug("Found user: {UserEmail}", user.Email);
+        return user;
+    }
+    catch (Exception ex)
+    {
+        _logger.LogError(ex, "Error retrieving profile for user: {UserId}", userId);
+        return null;
+    }
+}
         /// <summary>
         /// Marks an account for deletion (soft delete)
         /// </summary>

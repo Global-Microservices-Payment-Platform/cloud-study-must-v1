@@ -75,25 +75,26 @@ namespace mpesaIntegration.Services
                         _configuration.GetValue<double>("Jwt:ExpirationInMinutes"));
             var Claims = new List<Claim>
 {
+    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-    new Claim(ClaimTypes.Name, user.FullName),
-    new Claim(ClaimTypes.Email, user.Email),
-    new Claim(ClaimTypes.Role, user.Role.ToString()),
     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+    new Claim(ClaimTypes.Email, user.Email),
+    new Claim(ClaimTypes.Name, user.FullName),
+    new Claim(ClaimTypes.Role, user.Role.ToString())
 };
 
 
-       var tokenDescriptor = new SecurityTokenDescriptor
-{
-    Subject = new ClaimsIdentity(Claims),
-    Expires = expiration,
-    SigningCredentials = new SigningCredentials(
-        new SymmetricSecurityKey(key),
-        SecurityAlgorithms.HmacSha256 // Match validation algorithm
-    ),
-    Issuer = _configuration["Jwt:Issuer"],
-    Audience = _configuration["Jwt:Audience"]
-};
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(Claims),
+                Expires = expiration,
+                SigningCredentials = new SigningCredentials(
+             new SymmetricSecurityKey(key),
+             SecurityAlgorithms.HmacSha256 // Match validation algorithm
+         ),
+                Issuer = _configuration["Jwt:Issuer"],
+                Audience = _configuration["Jwt:Audience"]
+            };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return (tokenHandler.WriteToken(token), expiration);
         }
