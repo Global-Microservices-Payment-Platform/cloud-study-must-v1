@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj": {}
+    "/workspaces/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj": {}
   },
   "projects": {
-    "/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj": {
+    "/workspaces/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj",
+        "projectUniqueName": "/workspaces/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj",
         "projectName": "mpesaIntegration",
-        "projectPath": "/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj",
-        "packagesPath": "/home/devopsadmin/.nuget/packages/",
-        "outputPath": "/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/",
+        "projectPath": "/workspaces/mpesaIntergration/mpesaIntegration/mpesaIntegration.csproj",
+        "packagesPath": "/root/.nuget/packages/",
+        "outputPath": "/workspaces/mpesaIntergration/mpesaIntegration/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/devopsadmin/.nuget/NuGet/NuGet.Config"
+          "/root/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,6 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -94,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.114/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
