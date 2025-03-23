@@ -282,7 +282,8 @@ namespace mpesaIntegration.Models.Authentication
                 UserId = user.Id,
                 Email = user.Email,
                 FullName = user.FullName,
-                Role = user.Role
+                Role = user.Role,
+                // error = null //set error to null
             };
         }
 

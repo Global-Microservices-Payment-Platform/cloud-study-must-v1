@@ -83,16 +83,17 @@ namespace mpesaIntegration.Services
 };
 
 
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(Claims),
-                Expires = expiration,
-                SigningCredentials = new SigningCredentials(
-                    new SymmetricSecurityKey(key), // Corrected class name
-                    SecurityAlgorithms.HmacSha256Signature
-                ),
-                Issuer = _configuration["Jwt:Issuer"],
-            };
+       var tokenDescriptor = new SecurityTokenDescriptor
+{
+    Subject = new ClaimsIdentity(Claims),
+    Expires = expiration,
+    SigningCredentials = new SigningCredentials(
+        new SymmetricSecurityKey(key),
+        SecurityAlgorithms.HmacSha256 // Match validation algorithm
+    ),
+    Issuer = _configuration["Jwt:Issuer"],
+    Audience = _configuration["Jwt:Audience"]
+};
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return (tokenHandler.WriteToken(token), expiration);
         }
@@ -118,25 +119,28 @@ namespace mpesaIntegration.Services
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = false,
-                ValidateIssuer = false,
+                ValidateAudience = true,
+                ValidateIssuer = true,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"])),
                 ValidateLifetime = false,
                 ValidIssuer = _configuration["Jwt:Issuer"],
                 ValidAudience = _configuration["Jwt:Audience"],
+                // Add this to handle token version changes
+                ClockSkew = TimeSpan.FromMinutes(1)
 
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
-
+            // Modified algorithm validation
             if (securityToken is not JwtSecurityToken jwtSecurityToken ||
-                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature,
+                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256,
                     StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
             }
+
             return principal;
         }
 
