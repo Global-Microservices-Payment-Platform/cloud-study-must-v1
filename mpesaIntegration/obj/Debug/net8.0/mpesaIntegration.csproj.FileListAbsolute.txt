@@ -152,7 +152,6 @@
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.csproj.CoreCompileInputs.cache
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.MvcApplicationPartsAssemblyInfo.cs
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.MvcApplicationPartsAssemblyInfo.cache
-/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.sourcelink.json
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/staticwebassets.build.json
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/staticwebassets.development.json
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/staticwebassets/msbuild.mpesaIntegration.Microsoft.AspNetCore.StaticWebAssets.props
@@ -167,8 +166,6 @@
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.pdb
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.genruntimeconfig.cache
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/ref/mpesaIntegration.dll
-/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration.xml
-/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.xml
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/appsettings.Development.json
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/appsettings.json
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration
@@ -176,7 +173,6 @@
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration.runtimeconfig.json
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration.dll
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration.pdb
-/workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/mpesaIntegration.xml
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Humanizer.dll
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
 /workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
@@ -308,7 +304,15 @@
 /workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaInt.DEFE8343.Up2Date
 /workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.dll
 /workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/refint/mpesaIntegration.dll
-/workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.xml
 /workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.pdb
 /workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/mpesaIntegration.genruntimeconfig.cache
 /workspaces/mpesaIntergration/mpesaIntegration/obj/Debug/net8.0/ref/mpesaIntegration.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.Bcl.Memory.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Abstractions.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.JsonWebTokens.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Logging.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
+/home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll

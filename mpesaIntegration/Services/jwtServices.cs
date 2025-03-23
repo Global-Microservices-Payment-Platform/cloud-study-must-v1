@@ -25,7 +25,7 @@ namespace mpesaIntegration.Services
         /// <returns>Token and expiration time</returns>
         /// 
 
-        (string token, DateTime expiration) genereateJwtToken(User user);
+        (string token, DateTime expiration) GenerateJwtToken(User user);
 
         /// <summary>
         /// Generates a refresh token for maintaining persistent sessions
@@ -63,15 +63,16 @@ namespace mpesaIntegration.Services
         /// </summary>
         /// 
 
-        public (string token, DateTime expiration) genereateJwtToken(User user)
+        public (string token, DateTime expiration) GenerateJwtToken(User user)
         {
+            var secret = _configuration["Jwt:Secret"]
+          ?? throw new InvalidOperationException("JWT Secret not configured");
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
-
+            var key = Encoding.ASCII.GetBytes(secret);
             // Token expiration time (typically short-lived, e.g., 15-60 minutes)
 
-            var expiration = DateTime.UtcNow.AddMinutes(Convert.ToDouble(_configuration["Jwt:ExpirationInMinutes"]));
-
+            var expiration = DateTime.UtcNow.AddMinutes(
+                        _configuration.GetValue<double>("Jwt:ExpirationInMinutes"));
             var Claims = new List<Claim>
 {
     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
@@ -106,10 +107,10 @@ namespace mpesaIntegration.Services
             var randomNumber = new byte[64];
             using var rng = RandomNumberGenerator.Create();
             rng.GetBytes(randomNumber);
-            return  Convert.ToBase64String(randomNumber);
+            return Convert.ToBase64String(randomNumber);
 
         }
-         /// <summary>
+        /// <summary>
         /// Validates and extracts claims from an expired token
         /// </summary>
         /// 
@@ -127,11 +128,11 @@ namespace mpesaIntegration.Services
                 ValidAudience = _configuration["Jwt:Audience"],
 
             };
-               var tokenHandler = new JwtSecurityTokenHandler();
-                   var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
-            
-            if (securityToken is not JwtSecurityToken jwtSecurityToken || 
-                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature, 
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out var securityToken);
+
+            if (securityToken is not JwtSecurityToken jwtSecurityToken ||
+                !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256Signature,
                     StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new SecurityTokenException("Invalid token");
