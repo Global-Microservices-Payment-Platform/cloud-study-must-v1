@@ -134,7 +134,7 @@ namespace mpesaIntegration.Models.Payments
         /// </summary>
         /// 
 
-        public DateTime updatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
         /// <summary>
         /// Transaction ID returned by M-Pesa after successful payment
         /// </summary>
