@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using mpesaIntegration.Models.Payments;
 using mpesaIntegration.Data;
 
-namespace mpesaIntegration.Services.MpesaPayment
+namespace mpesaIntegration.Services.Payments
 {
     /// <summary>
     /// Service for handling M-Pesa API integration operations
