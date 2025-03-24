@@ -11,7 +11,7 @@ namespace mpesaIntegration.Models.Payments
     /// </summary>
     /// 
 
-    public enum paymentStatus
+    public enum PaymentStatus
     {
         /// <summary>
         /// Payment has been initiated but STK push not yet sent
@@ -27,7 +27,7 @@ namespace mpesaIntegration.Models.Payments
         StkPushSent = 2,
         /// <summary>
         /// Payment has been successfully completed
-        /// </summary>
+        /// </summary>  
         /// 
 
         Completed = 3,
@@ -106,7 +106,7 @@ namespace mpesaIntegration.Models.Payments
         /// 
         [Required]
         [MaxLength(200)]
-        public required string TransactionDesc { get; set; }
+        public required string Description { get; set; }
 
         /// <summary>
         /// Account reference for the transaction (e.g., order number, invoice number)
@@ -121,13 +121,13 @@ namespace mpesaIntegration.Models.Payments
         /// Current status of the payment transaction
         /// </summary>
         [Required]
-        public paymentStatus Status { get; set; }
+        public PaymentStatus Status { get; set; }
         /// <summary>
         /// Date and time when the payment was initiated
         /// </summary>
         /// 
         [Required]
-        public DateTime createdAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         /// <summary>
         /// Date and time when the payment status was last updated
@@ -207,7 +207,7 @@ namespace mpesaIntegration.Models.Payments
         /// </summary>
         /// 
 
-        public string password { get; set; }
+        public string Password { get; set; }
 
         /// <summary>
         /// Timestamp of the transaction in YYYYMMDDHHmmss format
@@ -373,7 +373,7 @@ namespace mpesaIntegration.Models.Payments
         /// <summary>
         /// Current status of the payment
         /// </summary>
-        public paymentStatus Status { get; set; }
+        public PaymentStatus Status { get; set; }
         /// <summary>
         /// M-Pesa receipt number for completed transactions
         /// </summary>
