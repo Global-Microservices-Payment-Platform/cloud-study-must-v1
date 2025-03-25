@@ -35,7 +35,7 @@ namespace mpesaIntegration.Models.Payments
         /// Payment was cancelled by the user
         /// </summary>
         /// 
-        cancelled = 4,
+        Cancelled = 4,
 
         /// <summary>
         /// Payment failed due to technical or other issues
