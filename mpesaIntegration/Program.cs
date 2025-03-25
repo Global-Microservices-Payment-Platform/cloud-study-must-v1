@@ -6,6 +6,7 @@ using mpesaIntegration.Data;
 using mpesaIntegration.Repositories;
 using mpesaIntegration.Services;
 using System.Text;
+using mpesaIntegration.Services.Payments;
 
 internal class Program
 {
@@ -77,6 +78,8 @@ internal class Program
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddHttpClient<IMpesaService, MpesaService>();
+        builder.Services.AddHttpClient<IPaymentService, PaymentService>();
 
         var app = builder.Build();
 
