@@ -6,11 +6,34 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace mpesaIntegration.Migrations
 {
     /// <inheritdoc />
-    public partial class AddpaymentsTables : Migration
+    public partial class AllowNullMpesaReceiptNumber : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    FullName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: false),
+                    PasswordSalt = table.Column<string>(type: "text", nullable: false),
+                    MobileNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: false),
+                    IsEmailVerified = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    LastLoginAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RefreshToken = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    RefreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
@@ -24,7 +47,7 @@ namespace mpesaIntegration.Migrations
                     Status = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    MpesaReceiptNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    MpesaReceiptNumber = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
                     CheckoutRequestId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     ResultCode = table.Column<int>(type: "integer", nullable: true),
                     ResultDescription = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
@@ -44,6 +67,12 @@ namespace mpesaIntegration.Migrations
                 name: "IX_Payments_UserId",
                 table: "Payments",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -51,6 +80,9 @@ namespace mpesaIntegration.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

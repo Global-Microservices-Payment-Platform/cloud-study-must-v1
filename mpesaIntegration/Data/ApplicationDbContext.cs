@@ -32,10 +32,11 @@ namespace mpesaIntegration.Data
         /// </summary>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseNpgsql("Host=ep-silent-frost-a8yk1rxt-pooler.eastus2.azure.neon.tech;Database=mpesaintergration;Username=mpesaintergration_owner;Password=npg_U7Dj1KGNhMAf;SSL Mode=Require;Trust Server Certificate=true");
-            }
+            // It's better to move the connection string to configuration rather than hardcoding it
+            // if (!optionsBuilder.IsConfigured)
+            // {
+            //     optionsBuilder.UseNpgsql("Host=ep-silent-frost-a8yk1rxt-pooler.eastus2.azure.neon.tech;Database=mpesaintergration;Username=mpesaintergration_owner;Password=npg_U7Dj1KGNhMAf;SSL Mode=Require;Trust Server Certificate=true");
+            // }
         }
 
         /// <summary>
@@ -59,6 +60,11 @@ namespace mpesaIntegration.Data
                       .OnDelete(DeleteBehavior.Restrict);
 
                 entity.Property(e => e.Status).HasConversion<string>();
+
+                // Configure MpesaReceiptNumber to be nullable
+                entity.Property(e => e.MpesaReceiptNumber).IsRequired(false);
+                //configure checkNumber to be nullable
+                  entity.Property(e => e.CheckoutRequestId).IsRequired(false);
             });
         }
     }

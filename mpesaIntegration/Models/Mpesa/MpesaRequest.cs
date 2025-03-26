@@ -141,13 +141,13 @@ namespace mpesaIntegration.Models.Payments
         /// 
 
         [MaxLength(100)]
-        public string MpesaReceiptNumber { get; set; }
+        public string? MpesaReceiptNumber { get; set; }
         /// <summary>
         /// Checkout request ID returned by M-Pesa when STK push is initiated
         /// </summary>
         /// 
         [MaxLength(100)]
-        public string CheckoutRequestId { get; set; }
+        public string? CheckoutRequestId { get; set; }
 
         /// <summary>
         /// Result code returned by M-Pesa API
@@ -157,7 +157,7 @@ namespace mpesaIntegration.Models.Payments
         /// Result description returned by M-Pesa API
         /// </summary>
         [MaxLength(200)]
-        public string ResultDescription { get; set; }
+        public string? ResultDescription { get; set; }
 
 
     }
@@ -180,13 +180,13 @@ namespace mpesaIntegration.Models.Payments
         /// </summary>
         [Required(ErrorMessage = "Description is required")]
         [MaxLength(200, ErrorMessage = "Description cannot exceed 200 characters")]
-        public string Description { get; set; }
+        public string? Description { get; set; }
         /// <summary>
         /// Account reference for the transaction (e.g., order number, invoice number)
         /// </summary>
         [Required(ErrorMessage = "Account reference is required")]
         [MaxLength(100, ErrorMessage = "Account reference cannot exceed 100 characters")]
-        public string AccountReference { get; set; }
+        public string? AccountReference { get; set; }
 
     }
 
@@ -200,53 +200,53 @@ namespace mpesaIntegration.Models.Payments
         /// Business shortcode (Paybill or Till number)
         /// </summary>
 
-        public string BusinessShortCode { get; set; }
+        public string? BusinessShortCode { get; set; }
 
         /// <summary>
         /// Password for the STK push request (Base64 encoded)
         /// </summary>
         /// 
 
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         /// <summary>
         /// Timestamp of the transaction in YYYYMMDDHHmmss format
         /// </summary>
 
-        public string Timestamp { get; set; }
+        public string? Timestamp { get; set; }
         /// <summary>
         /// Type of transaction (CustomerPayBillOnline or CustomerBuyGoodsOnline)
         /// </summary>
-        public string TransactionType { get; set; }
+        public string? TransactionType { get; set; }
         /// <summary>
         /// Amount to be charged
         /// </summary>
-        public string Amount { get; set; }
+        public string? Amount { get; set; }
         /// <summary>
         /// Phone number sending money (format: 254XXXXXXXXX)
         /// </summary>
-        public string PartyA { get; set; }
+        public string ?PartyA { get; set; }
         /// <summary>
         /// Business shortcode receiving payment (Paybill or Till number)
         /// </summary>
-        public string PartyB { get; set; }
+        public string? PartyB { get; set; }
         /// <summary>
         /// Phone number to receive STK push (format: 254XXXXXXXXX)
         /// </summary>
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
 
         /// <summary>
         /// URL to send callback after payment completion
         /// </summary>
-        public string CallBackURL { get; set; }
+        public string? CallBackURL { get; set; }
         /// <summary>
         /// Account reference (e.g., order number, invoice number)
         /// </summary>
-        public string AccountReference { get; set; }
+        public string? AccountReference { get; set; }
         /// <summary>
         /// Transaction description
         /// </summary>
-        public string TransactionDesc { get; set; }
+        public string? TransactionDesc { get; set; }
 
     }
 
@@ -259,25 +259,25 @@ namespace mpesaIntegration.Models.Payments
          /// <summary>
         /// Response code from M-Pesa API (0 means success)
         /// </summary>
-        public string ResponseCode { get; set; }
+        public string? ResponseCode { get; set; }
           /// <summary>
         /// Human-readable description of the response status
         /// </summary>
-        public string ResponseDescription { get; set; }
+        public string? ResponseDescription { get; set; }
          /// <summary>
         /// Request ID for the STK push
         /// </summary>
-        public string MerchantRequestID { get; set; }
+        public string? MerchantRequestID { get; set; }
 
         /// <summary>
         /// ID used to track the STK push request status
         /// </summary>
-        public string CheckoutRequestID { get; set; }
+        public string? CheckoutRequestID { get; set; }
           /// <summary>
         /// Additional message about the request status
         /// </summary>
         /// 
-        public string CustomerMessage { get; set; }
+        public string? CustomerMessage { get; set; }
 
     }
 
@@ -290,7 +290,7 @@ namespace mpesaIntegration.Models.Payments
            /// <summary>
         /// Main body of the callback payload
         /// </summary>
-        public StkCallbackBody Body { get; set; }
+        public StkCallbackBody? Body { get; set; }
 
     }
 
@@ -303,7 +303,7 @@ namespace mpesaIntegration.Models.Payments
                 /// <summary>
         /// Status of the STK transaction
         /// </summary>
-        public string ResultDesc { get; set; }
+        public string? ResultDesc { get; set; }
 
           /// <summary>
         /// Result code (0 means success)
@@ -313,15 +313,15 @@ namespace mpesaIntegration.Models.Payments
           /// <summary>
         /// Original request ID
         /// </summary>
-        public string MerchantRequestID { get; set; }
+        public string? MerchantRequestID { get; set; }
         /// <summary>
         /// Original checkout request ID
         /// </summary>
-        public string CheckoutRequestID { get; set; }
+        public string? CheckoutRequestID { get; set; }
          /// <summary>
         /// Transaction details in case of successful payment
         /// </summary>
-        public CallbackMetadata CallbackMetadata { get; set; }
+        public CallbackMetadata? CallbackMetadata { get; set; }
 
 
     }
@@ -336,7 +336,7 @@ namespace mpesaIntegration.Models.Payments
             /// <summary>
         /// List of items with transaction details
         /// </summary>
-        public List<CallbackItem> Item { get; set; }
+        public List<CallbackItem>? Item { get; set; }
 
     }
 
@@ -350,12 +350,12 @@ namespace mpesaIntegration.Models.Payments
         /// Name of the metadata item (Amount, PhoneNumber, etc.)
         /// </summary>
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         /// <summary>
         /// Value of the metadata item
         /// </summary>
-        public object Value { get; set; }
+        public object? Value { get; set; }
 
 
     }
@@ -377,11 +377,11 @@ namespace mpesaIntegration.Models.Payments
         /// <summary>
         /// M-Pesa receipt number for completed transactions
         /// </summary>
-        public string MpesaReceiptNumber { get; set; }
+        public string? MpesaReceiptNumber { get; set; }
          /// <summary>
         /// Description of the payment status
         /// </summary>
-        public string StatusDescription { get; set; }
+        public string? StatusDescription { get; set; }
 
         /// <summary>
         /// Amount paid
@@ -391,7 +391,7 @@ namespace mpesaIntegration.Models.Payments
         /// Phone number used for the transaction
         /// </summary>
         /// 
-        public string PhoneNumber { get; set; }
+        public string? PhoneNumber { get; set; }
           /// <summary>
         /// Date and time of the transaction
         /// </summary>
