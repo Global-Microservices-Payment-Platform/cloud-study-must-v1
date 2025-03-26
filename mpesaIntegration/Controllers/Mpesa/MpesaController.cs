@@ -67,8 +67,7 @@ namespace mpesaIntegration.Controllers.Payment
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error initiating STK push");
-                return StatusCode(500, "An error occurred while processing your payment request");
-
+                return StatusCode(500, "An error occurred while processing your payment request for mobilenumber");
             }
         }
 

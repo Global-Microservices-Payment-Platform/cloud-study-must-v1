@@ -12,8 +12,8 @@ using mpesaIntegration.Data;
 namespace mpesaIntegration.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250325075207_AddpaymentsTables")]
-    partial class AddpaymentsTables
+    [Migration("20250326202845_AllowNullMpesaReceiptNumber")]
+    partial class AllowNullMpesaReceiptNumber
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -113,7 +113,6 @@ namespace mpesaIntegration.Migrations
                         .HasColumnType("character varying(200)");
 
                     b.Property<string>("MpesaReceiptNumber")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 

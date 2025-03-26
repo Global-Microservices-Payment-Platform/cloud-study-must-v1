@@ -63,17 +63,18 @@ namespace mpesaIntegration.Services.Payments
         /// Creates a new payment request
         /// </summary>
         /// 
+        /// 
+        /// 
         public async Task<Payment> CreatePaymentAsync(Guid userId, StkPushRequest request)
         {
             try
             {
-                // Get user details
                 var user = await _dbContext.Users.FindAsync(userId);
                 if (user == null)
                 {
                     throw new ApplicationException("User not found");
                 }
-                // Format phone number
+
                 string phoneNumber = user.MobileNumber.Trim();
                 if (phoneNumber.StartsWith("0"))
                 {
@@ -83,7 +84,7 @@ namespace mpesaIntegration.Services.Payments
                 {
                     phoneNumber = "254" + phoneNumber;
                 }
-                // Create payment record
+
                 var payment = new Payment
                 {
                     Id = Guid.NewGuid(),
@@ -95,34 +96,28 @@ namespace mpesaIntegration.Services.Payments
                     Status = PaymentStatus.Initiated,
                     CreatedAt = DateTime.UtcNow
                 };
+
                 await _dbContext.Payments.AddAsync(payment);
                 await _dbContext.SaveChangesAsync();
 
                 return payment;
-
-
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error creating payment");
                 throw;
-
-
             }
         }
         /// <summary>
         /// Updates payment status based on M-Pesa callback
         /// </summary>
         /// 
+        /// 
         public async Task UpdatePaymentStatusFromCallbackAsync(MpesaStkCallback callback)
         {
             try
             {
                 var checkoutRequestId = callback.Body.CheckoutRequestID;
-                var resultCode = callback.Body.ResultCode;
-                var resultDesc = callback.Body.ResultDesc;
-
-                // Find the payment by checkout request ID
                 var payment = await _dbContext.Payments
                     .FirstOrDefaultAsync(p => p.CheckoutRequestId == checkoutRequestId);
 
@@ -132,42 +127,29 @@ namespace mpesaIntegration.Services.Payments
                     return;
                 }
 
-                // Update payment status based on result code
-                if (resultCode == 0) // Success
+                payment.ResultCode = callback.Body.ResultCode;
+                payment.ResultDescription = callback.Body.ResultDesc;
+                payment.UpdatedAt = DateTime.UtcNow;
+
+                if (callback.Body.ResultCode == 0) // Success
                 {
                     payment.Status = PaymentStatus.Completed;
 
-                    // Extract additional details from callback metadata
-                    if (callback.Body.CallbackMetadata != null && callback.Body.CallbackMetadata.Item != null)
+                    if (callback.Body.CallbackMetadata?.Item != null)
                     {
                         foreach (var item in callback.Body.CallbackMetadata.Item)
                         {
-                            switch (item.Name)
+                            if (item.Name == "MpesaReceiptNumber")
                             {
-                                case "MpesaReceiptNumber":
-                                    payment.MpesaReceiptNumber = item.Value.ToString();
-                                    break;
-                                case "Amount":
-                                    // You could validate the amount here if needed
-                                    break;
-                                case "TransactionDate":
-                                    // Store transaction date if needed
-                                    break;
-                                case "PhoneNumber":
-                                    // You could validate the phone number here if needed
-                                    break;
+                                payment.MpesaReceiptNumber = item.Value.ToString();
                             }
                         }
                     }
                 }
-                else // Failed
+                else
                 {
                     payment.Status = PaymentStatus.Failed;
                 }
-
-                payment.ResultCode = resultCode;
-                payment.ResultDescription = resultDesc;
-                payment.UpdatedAt = DateTime.UtcNow;
 
                 await _dbContext.SaveChangesAsync();
             }
