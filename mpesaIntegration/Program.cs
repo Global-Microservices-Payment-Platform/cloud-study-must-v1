@@ -79,7 +79,7 @@ internal class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddHttpClient<IMpesaService, MpesaService>();
-        builder.Services.AddHttpClient<IPaymentService, PaymentService>();
+        builder.Services.AddScoped<IPaymentService, PaymentService>();
         
 
         var app = builder.Build();

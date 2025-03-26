@@ -316,3 +316,6 @@
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Tokens.dll
 /home/devopsadmin/Personal Projects/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/System.IdentityModel.Tokens.Jwt.dll
+/workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.dll
+/workspaces/mpesaIntergration/mpesaIntegration/bin/Debug/net8.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
