@@ -8,3 +8,5 @@ RUN apt-get update && apt-get install -y clang gcc libc6-dev libunwind-dev zlib1
 
 # Set the entrypoint to be the dotnet CLI
 ENTRYPOINT ["dotnet"]
+# Set the working directory inside the container
+WORKDIR /app
