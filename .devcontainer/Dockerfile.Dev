@@ -3,8 +3,7 @@
 # Use the official .NET SDK image based on Debian Bookworm
 FROM mcr.microsoft.com/dotnet/sdk:8.0.303 AS build
 
-# Install necessary build tools
-RUN apt-get update && apt-get install -y clang gcc libc6-dev libunwind-dev zlib1g-dev
-
+RUN apt-get update && apt-get install -y clang gcc libc6-dev libunwind-dev zlib1g-dev 
+vkmlkbkjmkjknkknnk
 # Set the entrypoint to be the dotnet CLI
 ENTRYPOINT ["dotnet"]
