@@ -1,0 +1,40 @@
+# Generated Files
+**/bin
+**/obj
+**/coverage
+**/coveragereport
+**/TestResults
+system-commandline-sentinel-files/
+out/
+publish/
+log.txt
+
+# only include appsettings for a few default environments
+appsettings.*.json
+dab-config*.json
+*.dab-config.json
+!dab-config.*reference.json
+!dab-config.*.example.json
+
+*.cd
+
+# IDE/editor related directories
+.vs/
+.idea/
+**/.vscode/**/*
+**/*.user
+.localhistory/
+*.code-workspace
+
+.fake
+.ionide
+*.orig
+
+# Nuget package
+**/nupkg
+
+# Local-Only files
+.env
+
+# Verify test files
+*.received.*
