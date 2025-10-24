@@ -47,4 +47,3 @@ COPY --from=publish /app/publish .
 
 # Set the entrypoint to the app
 ENTRYPOINT ["dotnet", "cmag-azcontreg-worker.dll"]
-//you
